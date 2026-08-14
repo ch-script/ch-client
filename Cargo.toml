@@ -1,0 +1,9 @@
+[package]
+name = "ch-help"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+inquire = "0.9.4"
+serde = { version = "1.0.229", features = ["derive"] }
+toml = "1.1.4"

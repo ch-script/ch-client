@@ -1,0 +1,79 @@
+use crate::config::model::Config;
+use crate::config::templates::{clean_config, init_config, update_config};
+use crate::sys::detector::detect_os_id;
+use crate::sys::executor::execute;
+use crate::ui::interactive::run_interactive_help;
+use std::env;
+
+pub fn run() -> Result<(), String> {
+    let args: Vec<String> = env::args().collect();
+
+    // Process flags
+    if args.len() > 1 && process_flags(&args)? {
+        return Ok(());
+    }
+
+    let config = Config::load()?;
+
+    let (module, action, extra_args) = resolve_target(&args, &config)?;
+
+    let actions = config
+        .modules
+        .get(&module)
+        .ok_or_else(|| format!("Module '{}' not found in config", module))?;
+
+    let cmd_raw = actions
+        .get(&action)
+        .ok_or_else(|| format!("Action '{}' not found in module '{}'", action, module))?;
+
+    execute(cmd_raw, &extra_args)
+}
+
+fn process_flags(args: &[String]) -> Result<bool, String> {
+    let mut forced_distro = None;
+
+    for i in 1..args.len() {
+        if let Some(distro) = args[i].strip_prefix("--force=") {
+            forced_distro = Some(distro.to_string());
+        } else if args[i] == "--force" && i + 1 < args.len() {
+            forced_distro = Some(args[i + 1].clone());
+        }
+    }
+
+    for arg in args.iter().skip(1) {
+        if arg == "--create" {
+            let os_id = forced_distro.unwrap_or_else(|| detect_os_id().unwrap_or_else(|| "unknown".to_string()));
+            println!("[ch] Detected OS: {}", os_id);
+            init_config(&os_id)?;
+            println!("[ch] Conf created! :D all good!");
+            return Ok(true);
+        } else if arg == "--update" {
+            let os_id = forced_distro.unwrap_or_else(|| detect_os_id().unwrap_or_else(|| "unknown".to_string()));
+            update_config(&os_id)?;
+            println!("[ch] Upgraded :D");
+            return Ok(true);
+        } else if arg == "--clean" {
+            clean_config()?;
+            println!("[ch] Cleaned! :c");
+            return Ok(true);
+        }
+    }
+
+    Ok(false)
+}
+
+fn resolve_target(
+    args: &[String],
+    config: &Config,
+) -> Result<(String, String, Vec<String>), String> {
+    if args.len() >= 3 {
+        Ok((args[1].clone(), args[2].clone(), args[3..].to_vec()))
+    } else if args.len() == 1 || (args.len() == 2 && args[1] == "help") {
+        match run_interactive_help(config) {
+            Some((m, a, extra_args)) => Ok((m, a, extra_args)),
+            None => Err("Canceled operation".to_string()),
+        }
+    } else {
+        Err("Usage: ch <module> <action> [args...]\n   or: ch (for interactive super easy mode :D)".to_string())
+    }
+}
