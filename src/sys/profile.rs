@@ -1,6 +1,7 @@
 #[derive(Debug)]
 pub struct SystemProfile {
     pub os: String,
+    pub kernel: String,
     pub pkg_manager: String,
     pub init_system: String,
     pub gpu: Option<String>,

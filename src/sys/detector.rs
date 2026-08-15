@@ -112,6 +112,15 @@ fn detect_gpu() -> Option<String> {
 
 // Builds the user profile based on its machine
 pub fn build_system_profile(forced_distro: Option<String>) -> SystemProfile {
+    let os_const = std::env::consts::OS;
+    let kernel = if os_const.contains("bsd") {
+        "bsd".to_string()
+    } else if os_const == "linux" {
+        "linux".to_string()
+    } else {
+        "unknown".to_string()
+    };
+
     let os = forced_distro
         .or_else(detect_os_id)
         .unwrap_or_else(|| "unknown".to_string());
@@ -145,6 +154,7 @@ pub fn build_system_profile(forced_distro: Option<String>) -> SystemProfile {
 
     SystemProfile {
         os: normalized_os.clone(),
+        kernel,
         pkg_manager: final_pkg,
         init_system: final_init,
         gpu: detect_gpu(),

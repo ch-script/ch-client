@@ -25,7 +25,17 @@ pub fn run() -> Result<(), String> {
         .get(&action)
         .ok_or_else(|| format!("Action '{}' not found in module '{}'", action, module))?;
 
-    execute(cmd_raw, &extra_args)
+    let actual_cmd_str = match cmd_raw {
+        toml::Value::String(s) => s.as_str(),
+        toml::Value::Table(t) => {
+            t.get("cmd")
+                .and_then(|v| v.as_str())
+                .unwrap_or_else(|| panic!("Error: The advanced command does not have a cmd valid camp"))
+        },
+        _ => panic!("Error: Invalid command format for the TOML"),
+    };
+
+    execute(actual_cmd_str, &extra_args)
 }
 
 fn process_flags(args: &[String]) -> Result<bool, String> {

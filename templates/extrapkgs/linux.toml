@@ -1,0 +1,6 @@
+[extrapkgs.flatpak]
+install = "ch pkg install flatpak"
+setup = "flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo"
+
+[extrapkgs.appimage]
+install = "ch pkg install appimagelauncher"

@@ -1,14 +1,14 @@
 use super::templates::get_config_path;
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 use std::fs;
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Config {
     #[serde(rename = "active_distro")]
     pub _active_distro: String,
+    
     #[serde(flatten)]
-    pub modules: HashMap<String, HashMap<String, String>>,
+    pub modules: toml::map::Map<String, toml::Value>,
 }
 
 impl Config {

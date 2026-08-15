@@ -86,6 +86,10 @@ ch
 
 If it prints something back instead of "command not found", you're good
 
+## Do you want to personalize it?
+
+`ch` runs off declarative TOML files, so once it's installed you can personalize the commands and submenus to your choice. Check out [CONFIG.md](./CONFIG.md) for the full syntax rundown, covers everything from basic commands to nested menus to locking down dangerous stuff behind a confirmation prompt.
+
 ## That's it
 
 Yeah that's basically the whole setup, nothing crazy. If something breaks feel free to open an issue on the repo. :)
