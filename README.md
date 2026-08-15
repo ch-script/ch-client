@@ -4,6 +4,18 @@ A fast TUI/CLI command abstractor across Unix systems. Making syntax switching t
 
 Basically it's a little Rust CLI that helps you stop googling "how do I install a package on arch again" every time you distro-hop lol. Built for Linux and BSD, so if you're on Windows... well yk
 
+## Easy Install
+
+Don't feel like reading the manual install steps below? Tap your distro and just copy-paste the commands, that's it:
+
+- [NixOS](./installation/nixos.md) (imperative for now, flake support coming eventually)
+- [Arch Linux](./installation/arch.md)
+- [Solus](./installation/solus.md)
+- [Ubuntu](./installation/ubuntu.md)
+- [Void Linux](./installation/void.md)
+
+Each guide installs Rust, Cargo, Git, and fish for you, then clones, builds, and installs `ch` into a clean `~/ch-software/ch-client` folder so updates stay painless. If your distro isn't listed, just follow the manual steps below, the process is basically the same everywhere anyway :D
+
 ## What you need first
 
 Before you even think about installing it, make sure you've got these on your system:

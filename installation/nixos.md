@@ -1,0 +1,31 @@
+# Installing ch-client on NixOS
+
+i also use nixOS btw
+
+## 0. Install the dependencies
+
+The packages you need are named: rustup, git, fish, pciutils and micro (pciutils gets you `lspci`, micro's just a nice lil terminal editor for your dots).
+Sadly there's no easy script/flake for this yet, go to your `configuration.nix`, add the pkgs and rebuild.
+
+## Install ch-client
+
+Just copy and paste this on your terminal
+
+```bash
+rm -rf ~/ch-software/ch-client
+mkdir -p ~/ch-software
+cd ~/ch-software
+git clone https://github.com/ch-script/ch-client.git
+cd ch-client
+cargo build --release
+mkdir -p ~/.local/bin
+cp target/release/ch ~/.local/bin/
+chmod +x ~/.local/bin/ch
+set -U fish_user_paths ~/.local/bin $fish_user_paths
+source ~/.config/fish/config.fish
+ch --create
+```
+
+:)
+
+If it spits something out instead of "command not found", you're done. Go set up your dots now, see [CONFIG.md](../CONFIG.md).

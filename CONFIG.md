@@ -63,8 +63,7 @@ repair = "flatpak repair"
 
 ## 4. Advanced Commands (Guardrails & Confirmations)
 
-For destructive or scary commands, `ch` supports inline tables so you can slap some safety layers on before the command actually fires. Because nobody wants to `rm -rf` the wrong thing at 2am haha right
-right?
+For destructive or scary commands, `ch` supports inline tables so you can slap some safety layers on before the command actually fires. Because nobody wants to `rm -rf` the wrong thing at 2am haha right... right?
 
 Instead of passing a plain string, you pass an object `{ }` with these fields:
 
