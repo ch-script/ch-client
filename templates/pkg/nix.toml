@@ -1,0 +1,8 @@
+# System Packages (nixpkgs IMPERATIVE)
+# -----------------------------------------------------------------------------
+[pkg] # JUST IMPERATIVE FOR NOW, STILL FIGURING OUT CONFIGURATION.NIX WITHOUT BREAKING COMPUTERS, u can use "config edit" tho
+update = "sudo nixos-rebuild switch --upgrade"
+install = "nix-env -iA nixos.{1}"
+remove = "nix-env -e {1}"
+search = "nix-env -qaP {1}"
+

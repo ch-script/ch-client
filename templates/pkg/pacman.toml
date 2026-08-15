@@ -1,0 +1,17 @@
+# System Packages (glorious pacman)
+# -----------------------------------------------------------------------------
+[pkg]
+update = "sudo pacman -Syu"
+install = "sudo pacman -S {1}"
+remove = "sudo pacman -Rns {1}"
+search = "pacman -Ss {1}"
+info = "pacman -Si {1}"
+list_installed = "pacman -Qe"
+
+# Cleanup / Cache Management
+# -----------------------------------------------------------------------------
+[clean]
+clear_cache = "sudo pacman -Sc"
+clear_cache_all = "sudo pacman -Scc"
+remove_orphans = "sudo pacman -Rns $(pacman -Qtdq)"
+cache_size = "du -sh /var/cache/pacman/pkg"

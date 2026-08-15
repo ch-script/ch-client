@@ -1,0 +1,14 @@
+# Arch-specific Bootstrap (tools not available via pacman)
+# -----------------------------------------------------------------------------
+[arch-install]
+yay = "sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git /tmp/yay && cd /tmp/yay && makepkg -si"
+paru = "sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/paru.git /tmp/paru && cd /tmp/paru && makepkg -si"
+base_devel = "sudo pacman -S --needed base-devel"
+
+# AUR (yay helper)
+# -----------------------------------------------------------------------------
+[aur]
+install = "yay -S {1}"
+remove = "yay -Rns {1}"
+search = "yay -Ss {1}"
+update = "yay -Syu"

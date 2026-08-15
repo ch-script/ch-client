@@ -1,0 +1,18 @@
+# System Packages (eopkg)
+# -----------------------------------------------------------------------------
+[pkg]
+update = "sudo eopkg upgrade"
+sync_repo = "sudo eopkg update-repo"
+install = "sudo eopkg install {1}"
+remove = "sudo eopkg remove {1}"
+search = "eopkg search {1}"
+info = "eopkg info {1}"
+list_installed = "eopkg list-installed"
+
+# Cleanup / Cache Management
+# -----------------------------------------------------------------------------
+[clean]
+clear_cache = "sudo eopkg delete-cache"
+remove_orphans = "sudo eopkg remove-orphans"
+list_orphans = "eopkg list-orphans"
+rollback = "sudo eopkg history --takeback"

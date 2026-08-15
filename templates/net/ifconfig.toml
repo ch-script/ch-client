@@ -1,0 +1,10 @@
+# Universal network tools for FreeBSD / OpenBSD --- P.S. thanks for being centralized godBSD
+# -----------------------------------------------------------------------------
+[net]
+show_ip = "ifconfig"
+ping = "ping -c 4 {1}"
+list_wifi = "ifconfig wlan0 list scan"
+# BSD relies heavily on wpa_supplicant for passwords, this is a direct approach
+connect_wifi = "sudo ifconfig wlan0 ssid {1}" 
+status = "ifconfig -u"
+restart = "sudo service netif restart"

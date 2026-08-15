@@ -1,0 +1,17 @@
+# Services and Daemons
+# -----------------------------------------------------------------------------
+[service]
+start = "sudo sv up {1}"
+stop = "sudo sv down {1}"
+restart = "sudo sv restart {1}"
+status = "sudo sv status {1}"
+enable = "sudo ln -s /etc/sv/{1} /var/service/"
+disable = "sudo rm -f /var/service/{1}"
+list_all = "ls -l /var/service/"
+list_available = "ls /etc/sv/"
+
+# Logs Diagnostics
+# -----------------------------------------------------------------------------
+[log]
+kernel = "dmesg"
+service = "cat /var/log/{1}/current"

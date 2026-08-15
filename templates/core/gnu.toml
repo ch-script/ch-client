@@ -1,0 +1,43 @@
+# System Utilities
+# -----------------------------------------------------------------------------
+[sys]
+list_usb = "lsusb"
+list_partitions = "lsblk -f"
+disk_space = "df -h"
+processes = "btop"
+make_executable = "chmod +x {1}"
+create_folder = "mkdir -p {1}"
+
+# Boot Utilities
+# -----------------------------------------------------------------------------
+[boot]
+flash_iso = "sudo dd if={1} of={2} bs=4M status=progress oflag=sync"
+format_fat32 = "sudo mkfs.vfat -F 32 {1}"
+format_ext4 = "sudo mkfs.ext4 {1}"
+unmount = "sudo umount {1}"
+
+# Grub, if grub
+# -----------------------------------------------------------------------------
+[grub]
+update_grub = "sudo grub-mkconfig -o /boot/grub/grub.cfg"
+
+# File Editing
+# -----------------------------------------------------------------------------
+[edit]
+read = "cat {1}"
+write = "micro {1}"
+
+# Hardware info
+# -----------------------------------------------------------------------------
+[hardware]
+cpu_info = "lscpu"
+memory_info = "free -h"
+temperatures = "sensors"
+gpu_info = "lspci -k | grep -A 3 -i vga"
+devices = "lspci"
+
+# Battery info
+# -----------------------------------------------------------------------------
+[battery]
+battery_percent = "cat /sys/class/power_supply/BAT*/capacity"
+battery_status = "cat /sys/class/power_supply/BAT*/status"

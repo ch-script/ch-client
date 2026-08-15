@@ -1,6 +1,5 @@
 use crate::config::model::Config;
 use crate::config::templates::{clean_config, init_config, update_config};
-use crate::sys::detector::detect_os_id;
 use crate::sys::executor::execute;
 use crate::ui::interactive::run_interactive_help;
 use std::env;
@@ -42,14 +41,18 @@ fn process_flags(args: &[String]) -> Result<bool, String> {
 
     for arg in args.iter().skip(1) {
         if arg == "--create" {
-            let os_id = forced_distro.unwrap_or_else(|| detect_os_id().unwrap_or_else(|| "unknown".to_string()));
-            println!("[ch] Detected OS: {}", os_id);
-            init_config(&os_id)?;
+            // tuf logo
+            crate::ui::theme::print_logo(); // ik ik ill use "use" later i js want tuf logo
+
+
+            let profile = crate::sys::detector::build_system_profile(forced_distro.clone());
+            println!("[ch] Profile detected: {:?}", profile);
+            init_config(&profile)?;
             println!("[ch] Conf created! :D all good!");
             return Ok(true);
         } else if arg == "--update" {
-            let os_id = forced_distro.unwrap_or_else(|| detect_os_id().unwrap_or_else(|| "unknown".to_string()));
-            update_config(&os_id)?;
+            let profile = crate::sys::detector::build_system_profile(forced_distro.clone());
+            update_config(&profile)?;
             println!("[ch] Upgraded :D");
             return Ok(true);
         } else if arg == "--clean" {

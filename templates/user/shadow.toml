@@ -1,0 +1,8 @@
+[user]
+add = "sudo useradd -m {1}"
+delete = "sudo userdel -r {1}"
+set_password = "sudo passwd {1}"
+list_all = "cut -d: -f1 /etc/passwd"
+list_groups = "groups {1}"
+add_to_group = "sudo usermod -aG {2} {1}"
+change_shell = "chsh -s {1}"

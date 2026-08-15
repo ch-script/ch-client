@@ -1,0 +1,19 @@
+
+# THIS IS A HARDCODED VIA TO NOT LET UBUNTU WITHOUT ITS THINGS BUT IT'S FAR FROM THE IMPLEMENTATION IM LOOKING FOR (for flatpak i mean)
+
+
+# PPAs and External Sources
+# -----------------------------------------------------------------------------
+[ppa]
+add = "sudo add-apt-repository ppa:{1}"
+remove = "sudo add-apt-repository --remove ppa:{1}"
+list = "grep -r --include='*.list' '^deb ' /etc/apt/sources.list.d/"
+
+# Snap and Flatpak
+# -----------------------------------------------------------------------------
+[extra-install]
+install_snap_pkg = "sudo snap install {1}"
+remove_snap_pkg = "sudo snap remove {1}"
+install_flatpak = "sudo apt install flatpak"
+add_flathub = "flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
+install_flatpak_pkg = "flatpak install flathub {1}"

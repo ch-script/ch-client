@@ -1,0 +1,9 @@
+# iNet Wireless Daemon
+# -----------------------------------------------------------------------------
+[net]
+show_ip = "ip a"
+ping = "ping -c 4 {1}"
+list_wifi = "iwctl station wlan0 get-networks"
+connect_wifi = "iwctl --passphrase {2} station wlan0 connect {1}"
+status = "iwctl device list"
+restart = "sudo systemctl restart iwd"

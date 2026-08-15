@@ -1,6 +1,10 @@
 use crate::config::model::Config;
 use inquire::{InquireError, Select, Text};
 
+fn clear_screen() {
+    print!("\x1B[2J\x1B[1;1H");
+}
+
 pub fn run_interactive_help(config: &Config) -> Option<(String, String, Vec<String>)> {
     let mut modules: Vec<String> = config.modules.keys().cloned().collect();
     modules.sort();
@@ -11,6 +15,8 @@ pub fn run_interactive_help(config: &Config) -> Option<(String, String, Vec<Stri
     }
 
     loop {
+        clear_screen();
+        crate::ui::theme::print_logo(); // tuf logo
         let selected_module = match Select::new("Select a module to explore:", modules.clone()).prompt() {
             Ok(m) => m,
             Err(InquireError::OperationCanceled) | Err(InquireError::OperationInterrupted) => return None,

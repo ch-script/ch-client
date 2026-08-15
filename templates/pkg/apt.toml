@@ -1,0 +1,19 @@
+# System Packages (apt)
+# -----------------------------------------------------------------------------
+[app]
+update = "sudo apt update && sudo apt upgrade -y"
+install = "sudo apt install {1}"
+remove = "sudo apt remove {1}"
+purge = "sudo apt purge {1}"
+search = "apt search {1}"
+info = "apt show {1}"
+list_installed = "apt list --installed"
+
+
+# Cleanup / Cache Management
+# -----------------------------------------------------------------------------
+[clean]
+clear_cache = "sudo apt clean"
+remove_orphans = "sudo apt autoremove -y"
+remove_old_configs = "sudo apt purge $(dpkg -l | awk '/^rc/ {print $2}')"
+cache_size = "du -sh /var/cache/apt/archives"

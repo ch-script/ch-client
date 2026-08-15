@@ -1,0 +1,9 @@
+# Networking
+# -----------------------------------------------------------------------------
+[net]
+show_ip = "ip a"
+ping = "ping -c 4 {1}"
+list_wifi = "nmcli device wifi list"
+connect_wifi = "nmcli device wifi connect {1} password {2}"
+status = "nmcli general status"
+restart = "sudo systemctl restart NetworkManager"

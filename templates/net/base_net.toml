@@ -1,0 +1,9 @@
+# Raw iproute2 and iw (mostly found in fallback for minimal Linux servers)
+# -----------------------------------------------------------------------------
+[net]
+show_ip = "ip a"
+ping = "ping -c 4 {1}"
+list_wifi = "sudo iw dev wlan0 scan | grep SSID"
+connect_wifi = "sudo wpa_supplicant -B -i wlan0 -c <(wpa_passphrase {1} {2})"
+status = "ip link show"
+restart = "sudo ip link set wlan0 down && sudo ip link set wlan0 up"

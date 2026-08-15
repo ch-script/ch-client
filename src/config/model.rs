@@ -1,9 +1,9 @@
 use super::templates::get_config_path;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs;
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct Config {
     #[serde(rename = "active_distro")]
     pub _active_distro: String,

@@ -1,0 +1,20 @@
+# Services and Daemons
+# -----------------------------------------------------------------------------
+[service]
+start = "sudo systemctl start {1}"
+stop = "sudo systemctl stop {1}"
+restart = "sudo systemctl restart {1}"
+status = "systemctl status {1}"
+enable = "sudo systemctl enable {1}"
+disable = "sudo systemctl disable {1}"
+list_all = "systemctl list-units --type=service"
+
+
+# Logs and diagnostics
+# -----------------------------------------------------------------------------
+[log]
+boot = "journalctl -b"
+service = "journalctl -u {1}"
+follow = "journalctl -f"
+errors = "journalctl -p err -b"
+kernel = "dmesg"
