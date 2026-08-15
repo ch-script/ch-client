@@ -86,10 +86,17 @@ pub fn detect_os_id() -> Option<String> {
 fn detect_wm() -> Option<String> {
     if env::var("HYPRLAND_INSTANCE_SIGNATURE").is_ok() { return Some("hyprland".to_string()); }
     if env::var("NIRI_SOCKET").is_ok() { return Some("niri".to_string()); }
+    if env::var("I3SOCK").is_ok() { return Some("i3wm".to_string()); } 
+
     if let Ok(desktop) = env::var("XDG_CURRENT_DESKTOP") {
         let lower = desktop.to_lowercase();
         if lower.contains("kde") || lower.contains("plasma") { return Some("kde".to_string()); }
         if lower.contains("gnome") { return Some("gnome".to_string()); }
+        if lower.contains("i3") { return Some("i3wm".to_string()); }
+    }
+    if let Ok(session) = env::var("DESKTOP_SESSION") {
+        let lower = session.to_lowercase();
+        if lower.contains("i3") { return Some("i3wm".to_string()); }
     }
     None
 }
@@ -97,6 +104,9 @@ fn detect_wm() -> Option<String> {
 fn detect_gpu() -> Option<String> {
     if Path::new("/sys/module/nvidia").exists() { return Some("nvidia".to_string()); }
     if Path::new("/sys/module/amdgpu").exists() { return Some("amd".to_string()); }
+    if Path::new("/sys/module/i915").exists() || Path::new("/sys/module/xe").exists() { 
+        return Some("intel".to_string()); 
+    }
     None
 }
 

@@ -1,6 +1,6 @@
 # System Packages (xbps)
 # -----------------------------------------------------------------------------
-[app]
+[pkg]
 update = "sudo xbps-install -Su"
 install = "sudo xbps-install {1}"
 remove = "sudo xbps-remove -R {1}"

@@ -1,6 +1,6 @@
 # System Packages (apt)
 # -----------------------------------------------------------------------------
-[app]
+[pkg]
 update = "sudo apt update && sudo apt upgrade -y"
 install = "sudo apt install {1}"
 remove = "sudo apt remove {1}"
