@@ -3,7 +3,7 @@
 [app]
 update = "sudo xbps-install -Su"
 install = "sudo xbps-install {1}"
-remove = "sudo xbps-remove {1}"
+remove = "sudo xbps-remove -R {1}"
 search = "xbps-query -Rs {1}"
 info = "xbps-query -R {1}"
 list_installed = "xbps-query -l"
