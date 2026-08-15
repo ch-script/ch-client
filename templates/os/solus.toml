@@ -1,0 +1,8 @@
+# Solus-extra
+# -----------------------------------------------------------------------------
+[solus-extra]
+third_party_repo = "sudo eopkg ar 3rd-party https://mirrors.rit.edu/solus/repository/third-party/eopkg-index.xml"
+update_third_party = "sudo eopkg urg third-party"
+rebuild_db = "sudo eopkg rdb"
+history = "sudo eopkg hs"
+undo_last = "sudo eopkg hs -t {1}"

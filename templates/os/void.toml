@@ -1,0 +1,12 @@
+# Void Linux-specific Bootstrap
+# -----------------------------------------------------------------------------
+[void-install]
+setup_src = "git clone https://github.com/void-linux/void-packages.git ~/void-packages && cd ~/void-packages && ./xbps-src binary-bootstrap"
+build_pkg = "cd ~/void-packages && ./xbps-src pkg {1}"
+install_local = "sudo xbps-install -R ~/void-packages/hostdir/binpkgs {1}"
+
+# Repository management (Nonfree / Multilib)
+# -----------------------------------------------------------------------------
+[void-repo]
+enable_extra = "sudo xbps-install -y void-repo-nonfree void-repo-multilib void-repo-multilib-nonfree"
+update_repos = "sudo xbps-install -S"
