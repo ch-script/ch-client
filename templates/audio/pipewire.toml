@@ -2,9 +2,15 @@
 status = "wpctl status"
 
 set_vol = "wpctl set-volume @DEFAULT_AUDIO_SINK@ {1}%"
+
+vol_up = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+vol_down = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+
 mute = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
 
 set_mic = "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ {1}%"
+mic_up = "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+"
+mic_down = "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"
 mute_mic = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
 
 restart = "systemctl --user restart pipewire pipewire-pulse wireplumber"
