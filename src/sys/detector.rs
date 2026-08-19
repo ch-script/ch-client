@@ -83,20 +83,29 @@ pub fn detect_os_id() -> Option<String> {
     Some(os.to_string())
 }
 
-fn detect_wm() -> Option<String> {
-    if env::var("HYPRLAND_INSTANCE_SIGNATURE").is_ok() { return Some("hyprland".to_string()); }
-    if env::var("NIRI_SOCKET").is_ok() { return Some("niri".to_string()); }
-    if env::var("I3SOCK").is_ok() { return Some("i3wm".to_string()); } 
-
+fn detect_de() -> Option<String> { // only DE
     if let Ok(desktop) = env::var("XDG_CURRENT_DESKTOP") {
         let lower = desktop.to_lowercase();
         if lower.contains("kde") || lower.contains("plasma") { return Some("kde".to_string()); }
         if lower.contains("gnome") { return Some("gnome".to_string()); }
-        if lower.contains("i3") { return Some("i3wm".to_string()); }
     }
     if let Ok(session) = env::var("DESKTOP_SESSION") {
         let lower = session.to_lowercase();
+        if lower.contains("plasma") { return Some("kde".to_string()); }
+        if lower.contains("gnome") { return Some("gnome".to_string()); }
+    }
+    None
+}
+
+fn detect_wm() -> Option<String> { // only WM
+    if env::var("HYPRLAND_INSTANCE_SIGNATURE").is_ok() { return Some("hyprland".to_string()); }
+    if env::var("NIRI_SOCKET").is_ok() { return Some("niri".to_string()); }
+    if env::var("I3SOCK").is_ok() { return Some("i3wm".to_string()); } 
+    if env::var("BSPWM_SOCKET").is_ok() { return Some("bspwm".to_string()); }
+    if let Ok(desktop) = env::var("XDG_CURRENT_DESKTOP") {
+        let lower = desktop.to_lowercase();
         if lower.contains("i3") { return Some("i3wm".to_string()); }
+        if lower.contains("bspwm") { return Some("bspwm".to_string()); }
     }
     None
 }
@@ -183,7 +192,8 @@ pub fn build_system_profile(forced_distro: Option<String>) -> SystemProfile {
         pkg_manager: final_pkg,
         init_system: final_init,
         gpu: detect_gpu(),
-        wm_de: detect_wm(),
+        de: detect_de(),
+        wm: detect_wm(),
         audio: detect_audio(),
         core_utils: def_core.to_string(),
         user_manager: detect_user_manager(&normalized_os),
