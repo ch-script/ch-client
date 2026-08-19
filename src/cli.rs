@@ -1,5 +1,5 @@
 use crate::config::model::Config;
-use crate::config::templates::{clean_config, init_config, update_config};
+use crate::config::templates::{clean_config, init_config, update_config, backup, clean_backups};
 use crate::sys::executor::execute;
 use crate::ui::interactive::run_interactive_help;
 use std::env;
@@ -49,7 +49,11 @@ fn process_flags(args: &[String]) -> Result<bool, String> {
         }
     }
 
-    for arg in args.iter().skip(1) {
+    let mut i = 1;
+
+    while i < args.len() {
+        let arg = &args[i];
+
         if arg == "--create" {
             // tuf logo
             crate::ui::theme::print_logo(); // ik ik ill use "use" later i js want tuf logo
@@ -60,16 +64,39 @@ fn process_flags(args: &[String]) -> Result<bool, String> {
             init_config(&profile)?;
             println!("[ch] Conf created! :D all good!");
             return Ok(true);
+            
         } else if arg == "--update" {
             let profile = crate::sys::detector::build_system_profile(forced_distro.clone());
             update_config(&profile)?;
             println!("[ch] Upgraded :D");
             return Ok(true);
+            
         } else if arg == "--clean" {
             clean_config()?;
             println!("[ch] Cleaned! :c");
             return Ok(true);
+            
+        } else if arg == "--backup" {
+            if i + 2 < args.len() {
+                let category = &args[i + 1];
+                let file_path = &args[i + 2];
+                backup(category, file_path)?;
+                return Ok(true);
+            } else {
+                return Err("Usage: ch --backup <category> <file_path>".to_string());
+            }
+            
+        } else if arg == "--clean-backups" {
+            let category = if i + 1 < args.len() && !args[i + 1].starts_with("--") {
+                Some(args[i + 1].as_str())
+            } else {
+                None
+            };
+            clean_backups(category)?;
+            return Ok(true);
         }
+        
+        i += 1;
     }
 
     Ok(false)

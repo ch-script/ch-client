@@ -1,8 +1,9 @@
-# System Packages (nixpkgs IMPERATIVE)
+# System Packages (nixpkgs)
 # -----------------------------------------------------------------------------
-[pkg] # JUST IMPERATIVE FOR NOW, STILL FIGURING OUT CONFIGURATION.NIX WITHOUT BREAKING COMPUTERS, u can use "config edit" tho
-update = "sudo nixos-rebuild switch --upgrade"
-install = "nix-env -iA nixos.{1}"
-remove = "nix-env -e {1}"
-search = "nix-env -qaP {1}"
+[pkg] # WE ARE DECLARATIVE NOW!!!!!!
 
+setup = { cmd = "bash ~/.config/ch/scripts/nixos/setup.sh", confirm = "yesorno", msg = "This will modify your configuration.nix to import packages.nix. Proceed?" }
+
+install = "bash ~/.config/ch/scripts/nixos/install.sh {1}"
+
+remove = "bash ~/.config/ch/scripts/nixos/remove.sh {1}"
