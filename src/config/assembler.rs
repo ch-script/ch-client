@@ -37,11 +37,12 @@ pub fn assemble_config(profile: &SystemProfile) -> Result<String, String> {
         ("user", profile.user_manager.as_str()),
         ("net", profile.net_manager.as_str()),
         ("extrapkgs", profile.kernel.as_str()),
+        ("bluetooth", "bluetoothctl"),
     ];
 
     if let Some(gpu) = &profile.gpu { fragment_keys.push(("gpu", gpu.as_str())); }
     if let Some(wm) = &profile.wm_de { fragment_keys.push(("wm", wm.as_str())); }
-    
+    if let Some(audio) = &profile.audio { fragment_keys.push(("audio", audio.as_str())); }
 
     for (category, name) in fragment_keys {
         if let Some(template_str) = get_fragment(category, name) {

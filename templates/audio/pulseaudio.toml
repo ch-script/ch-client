@@ -1,0 +1,11 @@
+[audio]
+status = "pactl info"
+list_sinks = "pactl list short sinks"
+
+set_vol = "pactl set-sink-volume @DEFAULT_SINK@ {1}%"
+mute = "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+
+set_mic = "pactl set-source-volume @DEFAULT_SOURCE@ {1}%"
+mute_mic = "pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+
+restart = "systemctl --user restart pulseaudio"

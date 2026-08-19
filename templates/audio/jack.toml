@@ -1,0 +1,6 @@
+[audio]
+status = "jack_control status"
+start = "jack_control start"
+stop = "jack_control stop"
+
+kill = { cmd = "killall -9 jackdbus jackd", confirm = "yesorno", msg = "Force kill all JACK processes?" }

@@ -1,0 +1,10 @@
+[bluetooth]
+status = "bluetoothctl show"
+power_on = "bluetoothctl power on"
+power_off = "bluetoothctl power off"
+scan = "bluetoothctl scan on"
+devices = "bluetoothctl devices"
+pair = "bluetoothctl pair {1}"
+connect = "bluetoothctl connect {1}"
+disconnect = "bluetoothctl disconnect {1}"
+remove = { cmd = "bluetoothctl remove {1}", confirm = "yesorno", msg = "Are you sure you want to forget this device?" }

@@ -110,6 +110,31 @@ fn detect_gpu() -> Option<String> {
     None
 }
 
+// active audio server sockets or running processes (fallback js in case)
+fn detect_audio() -> Option<String> {
+    if let Ok(xdg_runtime) = std::env::var("XDG_RUNTIME_DIR") {
+        if std::path::Path::new(&format!("{}/pipewire-0", xdg_runtime)).exists() {
+            return Some("pipewire".to_string());
+        }
+        if std::path::Path::new(&format!("{}/pulse/native", xdg_runtime)).exists() {
+            return Some("pulseaudio".to_string());
+        }
+    }
+
+    //fallback
+    if let Ok(output) = std::process::Command::new("pgrep").arg("-x").arg("pipewire").output() {
+        if output.status.success() { return Some("pipewire".to_string()); }
+    }
+    if let Ok(output) = std::process::Command::new("pgrep").arg("-x").arg("pulseaudio").output() {
+        if output.status.success() { return Some("pulseaudio".to_string()); }
+    }
+    if let Ok(output) = std::process::Command::new("pgrep").arg("-x").arg("jackd").output() {
+        if output.status.success() { return Some("jack".to_string()); }
+    }
+
+    None
+}
+
 // Builds the user profile based on its machine
 pub fn build_system_profile(forced_distro: Option<String>) -> SystemProfile {
     let os_const = std::env::consts::OS;
@@ -159,6 +184,7 @@ pub fn build_system_profile(forced_distro: Option<String>) -> SystemProfile {
         init_system: final_init,
         gpu: detect_gpu(),
         wm_de: detect_wm(),
+        audio: detect_audio(),
         core_utils: def_core.to_string(),
         user_manager: detect_user_manager(&normalized_os),
         net_manager: detect_net_manager(&os),
